@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<title>{{ title }}</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- BEGIN Preload -->
+	{% block Preload %}
+		<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css" as="style">
+	{% endblock %}
+	<!-- END Preload -->
+	
+	<!-- BEGIN Stylesheets -->
+	{% block Stylesheets %}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css">
+		<style type="text/css">
+			@charset 'UTF-8';
+			
+			@media (prefers-color-scheme: light) {
+				:root {
+					--body_background: #fff;
+					--body_color: #333;
+					--card_background: #f8f9fa;
+					--card_border_color: #e8e9eb;
+				}
+			}
+			
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--body_background: #181b22;
+					--body_color: #dadada;
+					--card_background: #1f242a;
+					--card_border_color: #272c33;
+				}
+			}
+			
+			body {
+				background: var(--body_background);
+				color: var(--body_color);
+			}
+			
+			body, h1, h2, h3, h4, h5, h6 {
+				font-weight: 400;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			p:last-child {
+				margin-bottom: 0;
+			}
+			
+			.container {
+				margin: 60px auto;
+				max-width: 900px;
+			}
+			
+			.card {
+				background: var(--card_background);
+				border: 2px solid var(--card_border_color);
+			}
+			
+			.form-control {
+				box-shadow: none!important;
+			}
+			
+			.btn, .btn:hover, .btn:focus, .btn:active {
+				background: #0a69bb!important;
+				color: #fff!important;
+				font-weight: 500;
+				border: none;
+				box-shadow: none;
+				text-transform: uppercase;
+			}
+			
+			.page-icon {
+				padding-right: 40px;
+			}
+			
+			.page-icon i {
+				font-size: 550%;
+				display: block;
+				color: #0a69bb;
+			}
+			
+			.error-icon {
+				color: #e7b00e!important;
+			}
+		</style>
+	{% endblock %}
+	<!-- END Stylesheets -->
+</head>
+<body>
+	<main class="container text-center text-sm-start">
+		<!-- BEGIN Content -->
+		{% block Content %}{% endblock %}
+		<!-- END Content -->
+	</main>
+	
+	<!-- BEGIN Scripts -->
+	{% block Scripts %}{% endblock %}
+	<!-- END Scripts -->
+</body>
+</html>

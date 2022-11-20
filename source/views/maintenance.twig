@@ -1,0 +1,65 @@
+{% set title = 'Down For Maintenance' %}
+
+{% extends 'shared/base.twig' %}
+
+{% block Preload %}
+	{{ parent() }}
+	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" as="style">
+{% endblock %}
+
+{% block Stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+{% endblock %}
+
+{% block Scripts %}
+	{{ parent() }}
+	<script>
+		var form = document.getElementById('login-form'),
+			button = document.getElementById('login-button'),
+			error = document.getElementById('error'),
+			lastKey = '';
+
+		form.onsubmit = function(event) {
+			event.preventDefault();
+			
+			var key = this.elements.namedItem('key').value;
+			
+			if (key == lastKey) {
+				return;
+			}
+			
+			lastKey = key;
+			button.disabled = true;
+			
+			var request = new XMLHttpRequest;
+			request.open('POST', document.location.pathname, true);
+			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			request.send('key=' + key);
+			
+			request.onreadystatechange = function() {
+				if (this.readyState == 4) {
+					if (this.status == 200) {
+						window.location = '/';
+					} else {
+						button.disabled = false;
+						error.style.display = 'block';
+						error.innerHTML = `<i class="fas fa-times-circle me-2" style="font-size:90%;"></i> Incorrect maintenance key.`;
+					}
+				}
+			};
+		};
+	</script>
+{% endblock %}
+
+{% block Content %}
+	<h1 class="fw-bold">{{ title }}</h1>
+	<h4 class="mb-4">{{ message }}</h4>
+	<form id="login-form" method="POST">
+		<div class="input-group mb-3">
+			<input class="form-control" name="key" type="password" placeholder="Access Key" required>
+			<button class="btn" id="login-button" type="submit">Log In</button>
+		</div>
+		<div class="text-danger fw-bold" id="error" style="display:none;"></div>
+	</form>
+{% endblock %}

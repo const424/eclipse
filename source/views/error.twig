@@ -1,0 +1,26 @@
+{% extends 'shared/base.twig' %}
+
+{% block Content %}
+	<h1 class="fw-bold">{{ title }}</h1>
+	
+	{% for message in messages %}
+		<h4>{{ message }}</h4>
+	{% endfor %}
+	
+	{% if exception %}
+		<div class="card text-start mt-5">
+			<div class="card-header">Exception</div>
+			<div class="card-body">
+				{% for key, value in exception %}
+					<div class="fw-bold">{{ key|capitalize }}:</div>
+					<p>{{ value }}</p>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+	
+	{% if referer %}
+		<div class="mt-4"></div>
+		<a href="{{ referer }}" class="btn">Go Back</a>
+	{% endif %}
+{% endblock %}
