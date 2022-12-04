@@ -71,6 +71,18 @@ class View
 				return Language::get($key, $data);
 			}));
 			
+			self::addFilter(new TwigFilter('number_shorten', function(int $number) {
+				return number_shorten($number);
+			}));
+			
+			self::addFilter(new TwigFilter('str_initials', function(string $string) {
+				return str_initials($string);
+			}));
+			
+			self::addFilter(new TwigFilter('str_slug', function(string $string) {
+				return str_slug($string);
+			}));
+			
 			self::$cache[$directory] = self::$twig;
 		}
 	}

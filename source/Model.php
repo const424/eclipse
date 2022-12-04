@@ -15,7 +15,8 @@ class Model extends EloquentModel
 		'updated_at' => 'datetime'
 	];
 	
-	public function scopeWithPagination($query, int $perPage, string $parameter = 'page') {
+	public function scopeWithPagination($query, int $perPage, string $parameter = 'page')
+	{
 		$pages = ceil($query->count() / $perPage);
 		$page = (int) Request::get($parameter, 1);
 		
@@ -31,14 +32,14 @@ class Model extends EloquentModel
 		
 		$offset = ($page - 1) * $perPage;
 		$paginator = new stdClass;
-		$paginator->perPage = $perPage;
+		$paginator->per_page = $perPage;
 		$paginator->parameter = $parameter;
-		$paginator->currentPage = $page;
-		$paginator->totalPages = $pages;
-		$paginator->hasPreviousPage = $page > 1;
-		$paginator->hasNextPage = $page < $pages;
-		$paginator->previousPage = $paginator->hasPreviousPage ? $page - 1 : 1;
-		$paginator->nextPage = $paginator->hasNextPage ? $page + 1 : $pages;
+		$paginator->current_page = $page;
+		$paginator->total_pages = $pages;
+		$paginator->has_previous_page = $page > 1;
+		$paginator->has_next_page = $page < $pages;
+		$paginator->previous_page = $paginator->has_previous_page ? $page - 1 : 1;
+		$paginator->next_page = $paginator->has_next_page ? $page + 1 : $pages;
 		$results = $query->take($perPage)->skip(($page - 1) * $perPage)->get();
 		$results->paginator = $paginator;
 		

@@ -17,8 +17,57 @@ function config(string $key, $fallback = null) {
 	return Config::get($key, $fallback);
 }
 
-function str_rand(int $length = 10, string $characters = '0123456789abcdefghijklmnopqrstuvwxyz') {
+function str_random(int $length = 10, string $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
 	return substr(str_shuffle(str_repeat($characters, ceil($length / strlen($characters)) )), 1, $length);
+}
+
+function str_slug(string $string, string $separator = '-') {
+	$flip = $separator == '-' ? '_' : '-';
+	$string = preg_replace('!['.preg_quote($flip).']+!u', $separator, $string);
+	$string = str_replace('@', $separator.'at'.$separator, $string);
+	$string = preg_replace('![^'.preg_quote($separator).'\pL\pN\s]+!u', '', mb_strtolower($string));
+	$string = preg_replace('!['.preg_quote($separator).'\s]+!u', $separator, $string);
+	$string = trim($string, $separator);
+	
+	return empty($string) ? null : $string;
+}
+
+function str_initials(string $string) {
+	return array_reduce(explode(' ', $string), function ($initials, $word) {
+		return sprintf('%s%s', $initials, substr($word, 0, 1));
+	}, '');
+}
+
+function number_shorten(int $number) {
+	if ($number < 999) {
+		return $number;
+	} else if ($number > 999 && $number <= 9999) {
+		$number = substr($number, 0, 1);
+		
+		return "{$number}K+";
+	} else if ($number > 9999 && $number <= 99999) {
+		$number = substr($number, 0, 2);
+		
+		return "{$number}K+";
+	} else if ($number > 99999 && $number <= 999999) {
+		$number = substr($number, 0, 3);
+		
+		return "{$number}K+";
+	} else if ($number > 999999 && $number <= 9999999) {
+		$number = substr($number, 0, 1);
+		
+		return $number.'M+';
+	} else if ($number > 9999999 && $number <= 99999999) {
+		$number = substr($number, 0, 2);
+		
+		return "{$number}M+";
+	} else if ($number > 99999999 && $number <= 999999999) {
+		$number = substr($number, 0, 3);
+		
+		return "{$number}M+";
+	} else {
+		return $number;
+	}
 }
 
 function resize_image(string $file, int $width, int $height = null) {

@@ -28,7 +28,7 @@ class Cache
 		}
 	}
 	
-	public static function isEnabled()
+	public static function enabled()
 	{
 		return self::$enabled;
 	}

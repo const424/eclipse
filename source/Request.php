@@ -5,6 +5,7 @@ use Const424\Eclipse\Database;
 use Const424\Eclipse\Language;
 use Const424\Eclipse\Validator;
 use Illuminate\Validation\Factory;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Const424\Eclipse\Exceptions\RouteException;
 use Illuminate\Validation\DatabasePresenceVerifier;
 
@@ -108,7 +109,8 @@ class Request
 	{
 		$validator = new Factory(Language::$translator);
 		$validator->setPresenceVerifier(new DatabasePresenceVerifier(Database::getCapsule()->getDatabaseManager()));
+		$request = SymfonyRequest::createFromGlobals();
 		
-		return $validator->make($_REQUEST + $_FILES, $rules, $messages);
+		return $validator->make($_REQUEST + $request->files->all(), $rules, $messages);
 	}
 }
