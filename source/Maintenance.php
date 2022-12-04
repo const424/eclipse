@@ -18,7 +18,7 @@ class Maintenance
 	
 	public static function loadConfig()
 	{
-		$default = [
+		$default = (object) [
 			'enabled' => false,
 			'message' => self::DEFAULT_MESSAGE,
 			'keys' => [],
