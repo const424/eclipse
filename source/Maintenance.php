@@ -18,14 +18,14 @@ class Maintenance
 	
 	public static function loadConfig()
 	{
-		$default = (object) [
+		$default = [
 			'enabled' => false,
 			'message' => self::DEFAULT_MESSAGE,
 			'keys' => [],
 			'exceptions' => []
 		];
 		
-		self::$config = file_exists(self::$file) ? json_decode(file_get_contents(self::$file)) : $default;
+		self::$config = file_exists(self::$file) ? json_decode(file_get_contents(self::$file)) : (object) $default;
 		self::$config->enabled = self::$config->enabled ?? $default['enabled'];
 		self::$config->message = self::$config->message ?? $default['message'];
 		self::$config->keys = self::$config->keys ?? $default['keys'];
